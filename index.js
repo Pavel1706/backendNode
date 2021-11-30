@@ -52,7 +52,7 @@ ${message}
         .catch(err=>console.log(err))
 })
 
-const port = process.env.PORT || 3010;
+let port = process.env.PORT || 3010;
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
