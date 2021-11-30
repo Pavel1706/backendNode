@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const express = require('express')
 const app = express()
-const port = 3000
+
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -12,19 +12,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+let smtp_login = process.env.SMTP_LOGIN || '---'
+let smtp_password = process.env.SMTP_PASSWORD || '---'
+
 let transporter = nodemailer.createTransport({
     service:'gmail',
-    // host: "smtp.gmail.com",
-    // true for 465, false for other ports
-    // port: 25,
-    // secure: false,
-    // // requireTLS: true,
-    // tls:{
-    //     rejectUnauthorized:false
-    // },
     auth: {
-        user: "pasha17061987@gmail.com", // generated ethereal user
-        pass: "shpoks7654", // generated ethereal password
+        user: smtp_login, // generated ethereal user
+        pass: smtp_password,  // generated ethereal password
     },
 });
 
@@ -56,7 +51,9 @@ ${message}
     res.send('ok')
         .catch(err=>console.log(err))
 })
-//
+
+const port = process.env.PORT || 3010;
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
